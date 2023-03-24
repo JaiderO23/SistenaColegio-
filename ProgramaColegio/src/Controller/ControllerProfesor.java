@@ -35,7 +35,11 @@ public class ControllerProfesor {
         return p2.Lista();
     }
     
-    public  boolean actulizarDatos(String Nnombre,String Apellido,String Identificacion,byte edad){
+    public  boolean actulizarProfesor(String Nnombre,String Apellido,String Identificacion,byte edad){
         return p2.ActulizarProfesor(Nnombre, Apellido, Identificacion, edad);
+    }
+    
+    public boolean EliminarProfesor(String identificacion){
+        return p2.ElimarProfesor(identificacion);
     }
 }

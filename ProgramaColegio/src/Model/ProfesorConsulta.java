@@ -49,6 +49,21 @@ public class ProfesorConsulta extends Persona {
         }
     }
 
+    public boolean ElimarProfesor(String identificacion){
+        try{
+            Profesor p= new Profesor();
+            for (int i = 0; i < ListProfesor.size(); i++) {
+                if (ListProfesor.get(i).getIdentificacion().equals(identificacion)) {
+                    ListProfesor.remove(i);
+                     return true;
+                     
+                }
+            }
+           return false;
+        }catch(Exception e){
+            return false;
+        }
+    }
     public List<Profesor> Lista() {
         return ListProfesor;
     }

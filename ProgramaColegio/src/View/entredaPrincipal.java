@@ -49,6 +49,7 @@ public class entredaPrincipal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         TxEdad = new javax.swing.JTextField();
         BtActulizar = new javax.swing.JButton();
+        BtEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
 
@@ -101,6 +102,13 @@ public class entredaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        BtEliminar.setText("Eliminar");
+        BtEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -117,7 +125,9 @@ public class entredaPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(BtActulizar))
+                        .addComponent(BtActulizar)
+                        .addGap(27, 27, 27)
+                        .addComponent(BtEliminar))
                     .addComponent(jLabel5)
                     .addComponent(jLabel4)
                     .addComponent(jLabel2)
@@ -152,7 +162,8 @@ public class entredaPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(BtActulizar))
+                    .addComponent(BtActulizar)
+                    .addComponent(BtEliminar))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -238,7 +249,7 @@ public class entredaPrincipal extends javax.swing.JFrame {
         if (!TxNombre.getText().isEmpty() && !TxApellido.getText().isEmpty() && !TxIdentificacion.getText().isEmpty() && !TxEdad.getText().isEmpty() && !BoxUsuario.getSelectedItem().equals("Seleccionar")) {
             if (BoxUsuario.getSelectedItem().equals("Profesor")) {
                 ControllerProfesor p= new ControllerProfesor();
-                boolean entrada=p.agregarProfesor(TxNombre.getText(), TxApellido.getText(), TxIdentificacion.getText(), Byte.parseByte(TxEdad.getText()));
+                boolean entrada=p.actulizarProfesor(TxNombre.getText(), TxApellido.getText(), TxIdentificacion.getText(), Byte.parseByte(TxEdad.getText()));
                 if (entrada) {
                      JOptionPane.showMessageDialog(null, "Actulizacion de los datos correcto", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
                 }else{
@@ -260,8 +271,23 @@ public class entredaPrincipal extends javax.swing.JFrame {
         tabla();
     }//GEN-LAST:event_BtActulizarActionPerformed
 
+    private void BtEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtEliminarActionPerformed
+        if (!TxIdentificacion.getText().isEmpty()) {
+            ControllerProfesor p= new ControllerProfesor();
+            
+            boolean entrada=p.EliminarProfesor(TxIdentificacion.getText());
+            if (entrada) {
+                JOptionPane.showMessageDialog(null, "Se elimino la persona", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(null, "Nose pudo eliminar la persona", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        tabla();
+    }//GEN-LAST:event_BtEliminarActionPerformed
+
     public void tabla() {
         DefaultTableModel modelo = (DefaultTableModel) Tabla.getModel();
+        //Tabla.removeAll();
         modelo.setRowCount(0);
         ControllerProfesor p = new ControllerProfesor();
         List<Profesor> lista = p.ListaProfe();
@@ -320,6 +346,7 @@ public class entredaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> BoxUsuario;
     private javax.swing.JButton BtActulizar;
+    private javax.swing.JButton BtEliminar;
     private javax.swing.JTable Tabla;
     private javax.swing.JTextField TxApellido;
     private javax.swing.JTextField TxEdad;
