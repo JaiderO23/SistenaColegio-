@@ -1,13 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
-/**
- *
- * @author Ambiente 209-2
- */
+import Controller.ControlCurso;
+import Controller.cursoController;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
 public class Curso extends javax.swing.JFrame {
 
     /**
@@ -34,7 +33,7 @@ public class Curso extends javax.swing.JFrame {
         TxCodigo = new javax.swing.JTextField();
         BtCurso = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Tabla = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         TxIdentificacion = new javax.swing.JTextField();
 
@@ -52,8 +51,13 @@ public class Curso extends javax.swing.JFrame {
         jLabel3.setText("Codigo del Curso");
 
         BtCurso.setText("Agregar Curso");
+        BtCurso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtCursoActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -61,7 +65,7 @@ public class Curso extends javax.swing.JFrame {
                 "Nombre del curso", "Codigo"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(Tabla);
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Identificacion del Intructor ");
@@ -131,6 +135,34 @@ public class Curso extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BtCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtCursoActionPerformed
+        if (!TxCodigo.getText().isEmpty()&& !TxNombreCur.getText().isEmpty()) {
+            cursoController p=new cursoController();
+            boolean entrada=p.agregarCurso(Integer.parseInt(TxCodigo.getText()),TxNombreCur.getText());
+            if (entrada) {
+                JOptionPane.showMessageDialog(null, "Reguistro correcto", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(null, "Error de registro", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Por favor no deje campos vacio", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        tabla();
+    }//GEN-LAST:event_BtCursoActionPerformed
+
+    public void tabla(){
+     DefaultTableModel modelo = (DefaultTableModel) Tabla.getModel();
+        //Tabla.removeAll();
+        modelo.setRowCount(0);
+       cursoController p=new cursoController();
+        List<Model.Curso> lista = p.consultarListaCurso();
+        for (int i = 0; i < lista.size(); i++) {
+            String codigo = String.valueOf(lista.get(i).getCodigo());
+            String datos[] = {lista.get(i).getNombres(),codigo};
+            modelo.addRow(datos);
+        }
+}
     /**
      * @param args the command line arguments
      */
@@ -168,6 +200,7 @@ public class Curso extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtCurso;
+    private javax.swing.JTable Tabla;
     private javax.swing.JTextField TxCodigo;
     private javax.swing.JTextField TxIdentificacion;
     private javax.swing.JTextField TxNombreCur;
@@ -177,6 +210,5 @@ public class Curso extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

@@ -25,7 +25,7 @@ public class cursoController {
 
     public List<Curso> consultarListaCurso() {
         cursoConsulta CursoConsulta = new cursoConsulta();
-        return CursoConsulta.consultarListaCurso();
+        return CursoConsulta.ListaCurso();
     }
 
     public Curso consultarCursoPorCodigo(int codigo) {

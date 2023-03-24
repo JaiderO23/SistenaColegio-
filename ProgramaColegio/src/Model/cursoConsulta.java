@@ -5,15 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class cursoConsulta {
+public class cursoConsulta  {
     public static List<Curso> ListaCursos = new ArrayList<>();
 
     public boolean agregarCurso(int codigo, String nombre) {
+        
+        try{
         Curso cursoO = new Curso();
         cursoO.setCodigo(codigo);
         cursoO.setNombres(nombre);
         ListaCursos.add(cursoO);
-        return true;
+        return true;}
+        catch(Exception e){
+            return false;
+        }
     }
 
     public boolean editarCurso(int codigo, String nombre) {
@@ -45,7 +50,7 @@ public class cursoConsulta {
         return false;
     }
     
-    public List<Curso> consultarListaCurso(){
+    public List<Curso> ListaCurso(){
         return ListaCursos;
     }
     public Curso consultarCursoPorCodigo(int codigo){
